@@ -9,7 +9,6 @@ const config = require('./config/database');
 
 // routes import
 var profileManagement = require('./routes/profileManagement');
-var bookDetails = require('./routes/bookDetails');
 
 // middleware
 app.use(cors());
@@ -29,7 +28,6 @@ mongoose.connection.on('error',(error)=>{
 
 // routes
 app.use('/profileManagement', profileManagement);
-app.use('/bookDetails', bookDetails);
 
 // app listener
 app.listen(PORT, () => {
