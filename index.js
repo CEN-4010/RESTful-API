@@ -1,18 +1,29 @@
+//index.js
+// Import express
 var express = require('express');
-var app = express();
-var PORT = 3000;
-
-var cors = require('cors');
+// Import Body parser
 var bodyParser = require('body-parser');
+// Import Mongoose
 var mongoose = require('mongoose');
+// Initialise the app
+var app = express();
+
+var PORT = 3000;
+var cors = require('cors');
+
 const config = require('./config/database');
 
 // routes import
 var profileManagement = require('./routes/profileManagement');
+let bookRoutes = require("./routes/bookBrowsing");
 
 // middleware
 app.use(cors());
-app.use(bodyParser.urlencoded());
+
+// Configure bodyparser
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 // db connection
@@ -28,6 +39,7 @@ mongoose.connection.on('error',(error)=>{
 
 // routes
 app.use('/profileManagement', profileManagement);
+app.use('/browsing', bookRoutes);
 
 // app listener
 app.listen(PORT, () => {
