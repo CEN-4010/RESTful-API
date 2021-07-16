@@ -65,3 +65,23 @@ exports.view = function (req, res) {
 
     });
 };
+
+//Top 10 books that have sold the most copies
+exports.rating = function (req, res) {
+    Book.find({}, function(err, books) {
+
+        if (err) {
+            res.json({
+                status: "Error",
+                message: err,
+            });
+        }
+        else{
+            res.json({
+                message: "Top 10 books that have sold the most copies",
+                data: books,
+            });
+        }
+    }).sort({rating: -1 }).limit(10);
+};
+
