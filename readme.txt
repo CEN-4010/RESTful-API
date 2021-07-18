@@ -3,7 +3,7 @@ bookstore which targets a particular niche in
 technology.
 
 Features
-Book bowsing and sorting:
+Book browsing and sorting:
 
 Create a new book:
 http://localhost:3000/browsing/book/newBook
