@@ -36,11 +36,11 @@ var bookSchema = mongoose.Schema({
         required: true
     },
     copies_sold: {
-        type: String,
+        type: Number,
         required: true
     },
     rating: {
-        type: String,
+        type: Number,
         required: true
     }
 });

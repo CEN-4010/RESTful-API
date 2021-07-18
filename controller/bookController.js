@@ -4,22 +4,6 @@
 // Import book model
 Book = require('../models/bookModel');
 
-// Index actions
-exports.index = function (req, res) {
-    Book.get(function (err, books) {
-        if (err) {
-            res.json({
-                status: "Error",
-                message: err,
-            });
-        }
-        res.json({
-            message: "Books retrieved successfully",
-            data: books
-        });
-    });
-};
-
 // Create book
 exports.new = function (req, res) {
 
@@ -47,6 +31,22 @@ exports.new = function (req, res) {
     });
 };
 
+// List all the books in library
+exports.list = function (req, res) {
+    Book.get(function (err, books) {
+        if (err) {
+            res.json({
+                status: "Error",
+                message: err,
+            });
+        }
+        res.json({
+            message: "Books retrieved successfully",
+            data: books
+        });
+    });
+};
+
 //View book(s) by genre
 exports.view = function (req, res) {
     Book.find({genre : req.params.genre}, function (err, book) {
@@ -59,6 +59,7 @@ exports.view = function (req, res) {
         else{
             res.json({
                 message: "Books by genre",
+                status: req.params.genre,
                 data: book,
             });
         }
@@ -67,7 +68,7 @@ exports.view = function (req, res) {
 };
 
 //Top 10 books that have sold the most copies
-exports.rating = function (req, res) {
+exports.copies = function (req, res) {
     Book.find({}, function(err, books) {
 
         if (err) {
@@ -82,6 +83,44 @@ exports.rating = function (req, res) {
                 data: books,
             });
         }
-    }).sort({rating: -1 }).limit(10);
+    }).sort({copies_sold: -1 }).limit(10);
+};
+
+//Books a with particular rating and higher
+exports.rating = function (req, res) {
+    Book.find({ "rating": { $gte: req.params.rating } }, function(err, books) {
+
+        if (err) {
+            res.json({
+                status: "Error",
+                message: err,
+            });
+        }
+        else{
+            res.json({
+                message: "Books with a particular rating and higher",
+                data: books,
+            });
+        }
+    }).sort({rating: 1 });
+};
+
+//List of X Books at a time where X is an integer
+exports.someBooks = function (req, res) {
+    Book.find( function(err, books) {
+
+        if (err) {
+            res.json({
+                status: "Error",
+                message: err,
+            });
+        }
+        else{
+            res.json({
+                message: "Quantity of books",
+                data: books,
+            });
+        }
+    }).limit(parseInt(req.params.numberOfBooks));
 };
 
