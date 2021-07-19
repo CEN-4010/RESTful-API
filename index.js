@@ -9,6 +9,7 @@ const config = require('./config/database');
 
 // routes import
 var profileManagement = require('./routes/profileManagement');
+var shoppingCart = require('./routes/shoppingCart')
 
 // middleware
 app.use(cors());
@@ -16,7 +17,8 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 // db connection
-mongoose.connect(config.database, { useNewUrlParser: true });
+//mongoose.connect(config.database, { useNewUrlParser: true });
+mongoose.connect(config.bookDatabase, {useNewUrlParser: true});
 
 mongoose.connection.on('connected',()=>{
     console.log(`connected to database ${config.database}`);
@@ -28,6 +30,7 @@ mongoose.connection.on('error',(error)=>{
 
 // routes
 app.use('/profileManagement', profileManagement);
+app.use('/shoppingCart', shoppingCart);
 
 // app listener
 app.listen(PORT, () => {
