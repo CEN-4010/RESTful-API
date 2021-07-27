@@ -21,10 +21,7 @@ let bookRoutes = require("./routes/bookBrowsing");
 // middleware
 app.use(cors());
 
-// Configure bodyparser
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+// bodyparser
 app.use(bodyParser.json());
 
 // db connection
