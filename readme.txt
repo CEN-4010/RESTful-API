@@ -22,3 +22,17 @@ http://localhost:3000/browsing/book/byRating/5
 
 View a quantity of books (Change quantity value to view others):
 http://localhost:3000/browsing/book/viewBooks/2
+
+Book Details:
+
+Add a book:
+http://localhost:3000/bookDetails/addBook
+
+Add an author:
+http://localhost:3000/bookDetails/addAuthor
+
+Find a book by ISBN:
+http://localhost:3000/bookDetails/book/byISBN/52368456013
+
+Find books associated with an author:
+http://localhost:3000/bookDetails/book/byAuthor/Bob Owens
