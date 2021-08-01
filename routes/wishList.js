@@ -4,6 +4,7 @@ const router = express.Router();
 const WishList = require('../models/wishList');
 const Book = require('../models/bookModel');
 const Cart = require('../models/cart');
+const { ObjectId } = require('mongodb');
 
 // requests: get, post, patch, delete
 // router.TYPEOFREQUEST(PATH, (req, res) => {
@@ -16,7 +17,7 @@ const Cart = require('../models/cart');
 
 
 //creates a wishlist for each user in the store
-router.post("/wishList/:userId/:uniqueName/:bookId", async (req, res) => {
+router.post("/createWishList/:userId/:uniqueName/:bookId", async (req, res) => {
     const userId = req.params.userId;
     const bookId = req.params.bookId;
     const uniqueName = req.params.uniqueName;
@@ -25,7 +26,7 @@ router.post("/wishList/:userId/:uniqueName/:bookId", async (req, res) => {
         // Check if cart exist based on userId
         const cartExist = await WishList.findOne({'userId': userId});
 
-        Book.findById(bookId, function(err, book){
+        Book.findById(bookId, async function(err, book){
 
 
             if (cartExist) {
@@ -38,6 +39,7 @@ router.post("/wishList/:userId/:uniqueName/:bookId", async (req, res) => {
                         }
                     }
                 );
+                res.send(updateWishList);
             } else {
                 // add new document
                 const wishList = new WishList({
@@ -60,19 +62,21 @@ router.post("/wishList/:userId/:uniqueName/:bookId", async (req, res) => {
 
 //must be able to remove a book from a user's wishlist and add it into the user's shopping cart
     
-router.post('wishList/:userId/:bookId', async (req, res) => {
+router.post('/transferToCart/:userId/:bookId', async (req, res) => {
     const userId = req.params.userId;
     const bookId = req.params.bookId;
 
     try {
-        const userWishList = await WishList.findOne({'userId': userId}).books;
+        const userWishList = await WishList.findOne({'userId': userId});
 
         // Individual Book
-        const specificBook = userWishList.filter((book) => {
+        const specificBook = (userWishList.books).filter((book) => {
             if (book.bookId === bookId) {
                 return book
             }
         });
+
+        console.log(specificBook);
 
         // Delete from wish list
         await WishList.findOneAndUpdate(
@@ -90,7 +94,7 @@ router.post('wishList/:userId/:bookId', async (req, res) => {
                 $addToSet: {
                     books: specificBook
                 }
-            });
+            }, {upsert: true});
         
         res.send("Book moved to shopping Cart!");
     } catch (err) {
