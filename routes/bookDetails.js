@@ -10,7 +10,7 @@ const bookController = require('../controller/bookController');
 // routes
 // add book
 
-router.route('./addBook').post(bookController.new);
+router.route('/addBook').post(bookController.new);
 
 // add author
 router.post('/addAuthor', (req, res) => {
