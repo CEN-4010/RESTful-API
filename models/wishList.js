@@ -1,5 +1,5 @@
-const mongoose = require("moongoose");
-const book = require("../models/book");
+const mongoose = require("mongoose");
+// const book = require("../models/book");
 
 const wishListSchema = mongoose.Schema({
         name: {type: String},
