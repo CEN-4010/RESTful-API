@@ -1,10 +1,10 @@
-const mongoose = require("moongoose")
-const book = require("../models/book")
+const mongoose = require("moongoose");
+const book = require("../models/book");
 
 const wishListSchema = mongoose.Schema({
         name: {type: String},
         userId: {type: String},
-        books: [book]
+        books: []
 });
 
-module.exports = mongoose.model('Wish List', wishListSchema);
+module.exports = mongoose.model('WishList', wishListSchema);
