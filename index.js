@@ -40,7 +40,7 @@ mongoose.connection.on('error',(error)=>{
 app.use('/profileManagement', profileManagement);
 app.use('/browsing', bookRoutes);
 app.use('/bookDetails', bookDetails);
-app.use('/wishList', 
+app.use('/wishList', wishList);
 
 // app listener
 app.listen(PORT, () => {
