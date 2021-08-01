@@ -17,6 +17,7 @@ const config = require('./config/database');
 var profileManagement = require('./routes/profileManagement');
 let bookRoutes = require("./routes/bookBrowsing");
 var bookDetails = require('./routes/bookDetails');
+var wishList = require('./routes/wishList');
 
 // middleware
 app.use(cors());
@@ -39,6 +40,7 @@ mongoose.connection.on('error',(error)=>{
 app.use('/profileManagement', profileManagement);
 app.use('/browsing', bookRoutes);
 app.use('/bookDetails', bookDetails);
+app.use('/wishList', 
 
 // app listener
 app.listen(PORT, () => {
